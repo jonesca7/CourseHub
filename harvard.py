@@ -26,9 +26,10 @@ for page in range(num_pages + 1):
 	for course in courses:
 		course_title = course.find_element_by_class_name("field-name-title-qs").text
 		course_topic = course.find_element_by_class_name("field-name-subject-area").text
-		course_url = course.find_element_by_xpath("//h3/a").get_attribute("href")
+		course_url = course.find_element_by_xpath("div/div/div/h3/a").get_attribute("href")
 		course_object = {"name" : course_title, "topic" : course_topic, "platform" : "Harvard", "url" : course_url}
 		course_list.append(course_object)
+		print(course_url)
 
 harvard.insert_many(course_list)
 
