@@ -9,7 +9,7 @@ from resources.errors import errors
 from pymongo import MongoClient
 
 app = Flask(__name__)
-app.config.from_envvar('ENV_FILE_LOCATION')
+#app.config.from_envvar('ENV_FILE_LOCATION')
 api = Api(app, errors=errors)
 bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
@@ -44,13 +44,18 @@ def index():
     
     # return render_template("index.html", courses=courses, pagination=pagination)
     
+    param = request.args.get('query')
+    query = {"name" : param}
 
     page = request.args.get(get_page_parameter(), type=int, default=1)
     per_page = 20
     offset = (page - 1) * per_page
     print(offset)
 
-    courses = collection.find().sort("name", 1)
+    if param is None:
+        courses = collection.find().sort("name", 1)
+    else:
+        courses = collection.find({'name':{'$regex': str(param) }}).sort("name", 1)
     courses_for_render = courses.limit(per_page).skip(offset)
 
     search = False
