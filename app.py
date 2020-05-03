@@ -53,4 +53,5 @@ app.run()
 # mongod (to start db server)
 # Type following in a new terminal window
 # pipenv shell
+# export ENV_FILE_LOCATION=./.env
 # python3 app.py
