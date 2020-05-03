@@ -12,10 +12,14 @@ def findCourses(keyword=""):
         "name" : {'$regex' : '.*' + keyword + '.*', '$options' : 'i' }
     })
 
+    couseNames = []
+
 
     for document in cursor:
         print(document["name"])
+        couseNames.append(document["name"])
 
+    return couseNames
 
 
 if __name__ == '__main__':
