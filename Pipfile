@@ -9,6 +9,8 @@ verify_ssl = true
 flask = "*"
 flask-mongoengine = "*"
 flask-restful = "*"
+flask-bcrypt = "*"
+flask-jwt-extended = "*"
 
 [requires]
 python_version = "3.7"

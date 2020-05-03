@@ -1,11 +1,20 @@
 from flask import Flask
+from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager
 from database.db import initialize_db
 from flask_restful import Api
 from resources.routes import initialize_routes
 
 app = Flask(__name__)
+app.config.from_envvar('ENV_FILE_LOCATION')
 api = Api(app)
+bcrypt = Bcrypt(app)
+jwt = JWTManager(app)
 
+# TODO update to cluster in atlas
+# mongodb+srv://jonesca7:tohacks2020@coursehub-8qtyk.gcp.mongodb.net/test?retryWrites=true&w=majority
+
+# below is on Racheal's local machine
 app.config['MONGODB_SETTINGS'] = {
     "db": "course-hub",
     'host': 'mongodb://localhost:27017/course-hub'
@@ -13,7 +22,7 @@ app.config['MONGODB_SETTINGS'] = {
 
 initialize_db(app)
 initialize_routes(api)
-# if __name__ == "__main__":
+
 app.run()
 
 # INSTRUCTIONS
@@ -25,6 +34,9 @@ app.run()
 # pipenv install flask
 # pipenv install flask-mongoengine
 # pipenv install flask-restful
+# pipenv install flask-bcrypt
+# pipenv install flask-jwt-extended
+# pip install python-dotenv
 
 # Type below in terminal to run the app
 # mongod (to start db server)
