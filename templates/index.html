@@ -38,6 +38,8 @@
                 {% for course in courses %}
                 <div>
                     <h2>{{course["name"]}}</h2>
+                    <p>Subject: {{course["topic"]}}</p>
+                    <p>Offered by: {{course["platform"]}}</p>
                     <a href="{{course["url"]}}" target="_blank" title={{course["name"]}}>View this course</a>
                     <!-- <p style=color:blue>{{course["url"]}}</p> -->
                 </div>

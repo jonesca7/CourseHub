@@ -15,7 +15,7 @@ jwt = JWTManager(app)
 
 db_client = MongoClient('mongodb+srv://jonesca7:tohacks2020@coursehub-8qtyk.gcp.mongodb.net/test?retryWrites=true&w=majority')
 db = db_client.CourseList #Create database 
-harvard = db.harvard #Create collection called harvard
+collection = db.collection #Create collection called harvard
 
 # TODO update to cluster in atlas
 # mongodb+srv://jonesca7:tohacks2020@coursehub-8qtyk.gcp.mongodb.net/test?retryWrites=true&w=majority
@@ -31,7 +31,7 @@ initialize_routes(api)
 
 @app.route("/")
 def index():
-    courses = harvard.find()
+    courses = collection.find()
     return render_template("index.html", courses=courses)
 
 app.run()

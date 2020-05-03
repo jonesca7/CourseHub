@@ -4,7 +4,7 @@ from pymongo import MongoClient
 #Set up MongoDB client
 db_client = MongoClient('mongodb+srv://jonesca7:tohacks2020@coursehub-8qtyk.gcp.mongodb.net/test?retryWrites=true&w=majority')
 db = db_client.CourseList #Create database 
-harvard = db.harvard #Create collection called harvard
+collection = db.collection #Create collection within database
 
 #Set up Chrome driver for web browsing
 webdriver = "chromedriver.exe"
@@ -29,8 +29,7 @@ for page in range(num_pages + 1):
 		course_url = course.find_element_by_xpath("div/div/div/h3/a").get_attribute("href")
 		course_object = {"name" : course_title, "topic" : course_topic, "platform" : "Harvard", "url" : course_url}
 		course_list.append(course_object)
-		print(course_url)
 
-harvard.insert_many(course_list)
+collection.insert_many(course_list)
 
 driver.close()
