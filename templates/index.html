@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Course Hub</title>
+    </head>
+    <body>
+    	<h1>Welcome to Course Hub!</h1>
+        <form>
+            <input type="text" placeholder="Search..." name="query">
+        <ul>
+        	{% for course in courses %}
+            <div>
+                <h2>{{course["name"]}}</h2>
+                <p style=color:blue>{{course["url"]}}</p>
+            </div>
+            {% endfor %}
+        </ul>
+    </body>
+</html>

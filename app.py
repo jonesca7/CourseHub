@@ -1,15 +1,21 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from database.db import initialize_db
 from flask_restful import Api
 from resources.routes import initialize_routes
+from pymongo import MongoClient
 
 app = Flask(__name__)
-app.config.from_envvar('ENV_FILE_LOCATION')
+
+#app.config.from_envvar('ENV_FILE_LOCATION')
 api = Api(app)
 bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
+
+db_client = MongoClient('mongodb+srv://jonesca7:tohacks2020@coursehub-8qtyk.gcp.mongodb.net/test?retryWrites=true&w=majority')
+db = db_client.CourseList #Create database 
+harvard = db.harvard #Create collection called harvard
 
 # TODO update to cluster in atlas
 # mongodb+srv://jonesca7:tohacks2020@coursehub-8qtyk.gcp.mongodb.net/test?retryWrites=true&w=majority
@@ -22,6 +28,11 @@ app.config['MONGODB_SETTINGS'] = {
 
 initialize_db(app)
 initialize_routes(api)
+
+@app.route("/")
+def index():
+    courses = harvard.find()
+    return render_template("index.html", courses=courses)
 
 app.run()
 
