@@ -1,6 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
+from flask_paginate import Pagination, get_page_parameter
 from database.db import initialize_db
 from flask_restful import Api
 from resources.routes import initialize_routes
@@ -31,8 +32,36 @@ initialize_routes(api)
 
 @app.route("/")
 def index():
-    courses = collection.find()
-    return render_template("index.html", courses=courses)
+    # search = False
+    # q = request.args.get('q')
+    # if q:
+    #     search = True
+
+    # page = request.args.get(get_page_parameter(), type=int, default=1)
+    # # courses = collection.find()
+    # courses = collection.find().sort("name",pymongo.ASCENDING)   
+    # pagination = Pagination(page=page, total=courses.count(), search=search, record_name='courses', css_framework='bootstrap4')
+    
+    # return render_template("index.html", courses=courses, pagination=pagination)
+    
+
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    per_page = 20
+    offset = (page - 1) * per_page
+    print(offset)
+
+    courses = collection.find().sort("name", 1)
+    courses_for_render = courses.limit(per_page).skip(offset)
+
+    search = False
+    q = request.args.get('q')
+    if q:
+        search = True
+
+    pagination = Pagination(page=page, per_page=per_page, offset=offset,total=courses.count(), search=search,
+                            record_name='courses', css_framework='bootstrap4')
+    
+    return render_template("index.html", courses=courses_for_render, pagination=pagination)
 
 app.run()
 
@@ -48,6 +77,8 @@ app.run()
 # pipenv install flask-bcrypt
 # pipenv install flask-jwt-extended
 # pip install python-dotenv
+# pip install  flask-paginate
+
 
 # Type below in terminal to run the app
 # mongod (to start db server)
