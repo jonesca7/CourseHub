@@ -40,12 +40,18 @@
                                 <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search courses or topics" name="query">
                             </div>
                             <!--end of col-->
+                            &nbsp;&nbsp;&nbsp;&nbsp;
                             <div class="col-auto">
                                 <button class="btn btn-lg btn-success" type="submit">Search</button>
                             </div>
+                            <!--end of col-->
+                            &nbsp;
+                            <div class="col-auto">
+                                <a href="{{ url_for('index') }}"><button class="btn btn-lg btn-secondary">Refresh</button></a>
+                            </div>
                         </div>
                     </form>
-                    <br/><br/>
+                    <br/>
                     {{ pagination.info }}
                     {{ pagination.links }}
                     <table class="courses">
@@ -70,17 +76,6 @@
                     </table>
                     </br>
                     {{ pagination.links }}
-                    <!-- <ul>
-                        {% for course in courses %}
-                        <div>
-                            <h2>{{course["name"]}}</h2>
-                            <p>Subject: {{course["topic"]}}</p>
-                            <p>Offered by: {{course["platform"]}}</p>
-                            <a href="{{course["url"]}}" target="_blank" title={{course["name"]}}>View this course</a>
-                        </div>
-                        <br/>
-                        {% endfor %}
-                    </ul> -->
                 </div>
             </div>
         </div>
